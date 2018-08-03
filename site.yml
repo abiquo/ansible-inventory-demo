@@ -1,0 +1,22 @@
+---
+- name: Install MariaDB backend for Wordpress
+  hosts: wordpress-db
+  become: yes
+
+  roles:
+    - common
+    - mariadb
+
+- name: Install WordPress, Nginx, and PHP-FPM
+  hosts: wordpress-server
+  become: yes
+  # remote_user: root
+  # remote_user: user
+  # sudo: yes
+  vars:
+    wp_db_host: "{{ groups['wordpress-db'][0] }}"
+  roles:
+    - common
+    - nginx
+    - php-fpm
+    - wordpress

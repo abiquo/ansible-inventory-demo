@@ -1,0 +1,17 @@
+[all:vars]
+ansible_ssh_common_args=-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+ansible_ssh_user=centos
+
+[all:children]
+wordpress-server
+wordpress-db
+
+[var_wprole_srv]
+
+[var_wprole_db]
+
+[wordpress-server:children]
+var_wprole_srv
+
+[wordpress-db:children]
+var_wprole_db
